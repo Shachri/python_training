@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import unittest
-
+from contact import Contact
 class test_add_contact(unittest.TestCase):
 
 
@@ -17,12 +17,12 @@ class test_add_contact(unittest.TestCase):
         # return_to_home_page
         wd.get("https://localhost/addressbook/")
 
-    def init_contact(self, wd, firstname, middlename, lastname):
+    def init_contact(self, wd, contact):
         # init_contact
         wd.find_element(By.CSS_SELECTOR, 'a[href="edit.php"]').click()
-        wd.find_element(By.NAME, 'firstname').send_keys('%s' % firstname)
-        wd.find_element(By.NAME, 'middlename').send_keys('%s' % middlename)
-        wd.find_element(By.NAME, 'lastname').send_keys('%s' % lastname)
+        wd.find_element(By.NAME, 'firstname').send_keys('%s' % contact.firstname)
+        wd.find_element(By.NAME, 'middlename').send_keys('%s' % contact.middlename)
+        wd.find_element(By.NAME, 'lastname').send_keys('%s' % contact.lastname)
         wd.find_element(By.NAME, 'address').send_keys('Москва')
         wd.find_element(By.CSS_SELECTOR, '[value=Enter]').click()
 
@@ -40,10 +40,20 @@ class test_add_contact(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, 'admin', 'secret')
-        self.init_contact(wd, 'Иван', 'Иванов', 'Иванович')
+        self.init_contact(wd, Contact('Иван', 'Иванов', 'Иванович'))
         self.return_to_home_page(wd)
         self.logout(wd)
 
+    def test_add_empty_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, 'admin', 'secret')
+        self.init_contact(wd, Contact('Иван', 'Иванов', 'Иванович'))
+        self.return_to_home_page(wd)
+        self.logout(wd)
+
+    def tearDown(self):
+        self.wd.quit()
 
 
 
