@@ -10,7 +10,7 @@ def test_add_contact(app):
 
 def test_add_empty_contact(app):
     app.session.login('admin', 'secret')
-    app.contact.init_contact(Contact('Иван', 'Иванов', 'Иванович'))
+    app.contact.init_contact(Contact('Иван', 'Иванов', 'Иванович', address='Иваново'))
     app.session.logout()
 
 
