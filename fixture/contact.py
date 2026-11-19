@@ -9,8 +9,7 @@ class ContactHelper:
 
     def return_to_home_page(self):
         wd = self.app.wd
-        wd.find_element(By.LINK_TEXT,'home').click()
-
+        wd.find_element(By.LINK_TEXT, 'home').click()
 
     def init_contact(self, contact):
         wd = self.app.wd
@@ -40,5 +39,12 @@ class ContactHelper:
         self.clear_form(contact, wd)
         self.fill_contact_form(contact, wd)
         wd.find_element(By.NAME, 'update').click()
+        self.return_to_home_page()
+
+    def delete(self):
+        wd = self.app.wd
+        self.return_to_home_page()
+        wd.find_element(By.NAME, 'selected[]').click()
+        wd.find_element(By.NAME, 'delete').click()
         self.return_to_home_page()
 
