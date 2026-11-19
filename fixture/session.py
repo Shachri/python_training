@@ -18,4 +18,5 @@ class SessionHelper:
         wd = self.app.wd
         # logout
         wd.find_element(By.LINK_TEXT, "Logout").click()
+        wd.find_element(By.CSS_SELECTOR, '#LoginForm [value=Login]').click()
 
