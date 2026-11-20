@@ -9,13 +9,14 @@ class GroupHelper:
 
     def return_to_groups_page(self):
         wd = self.app.wd
-        # return to groups page
-        wd.find_element(By.LINK_TEXT, "groups").click()
+        if not (wd.current_url.endswith('group.php') and len(wd.find_elements(By.CSS_SELECTOR,'input[value="New group"]'))>0):
+            wd.find_element(By.LINK_TEXT, "groups").click()
 
     def open_group_page(self):
         wd = self.app.wd
-        # open group page
-        wd.find_element(By.LINK_TEXT, "groups").click()
+        if not (wd.current_url.endswith('group.php') and len(
+                wd.find_elements(By.CSS_SELECTOR, 'input[value="New group"]')) > 0):
+            wd.find_element(By.LINK_TEXT, "groups").click()
 
     def create(self, group):
         wd = self.app.wd

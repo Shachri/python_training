@@ -9,7 +9,9 @@ class ContactHelper:
 
     def return_to_home_page(self):
         wd = self.app.wd
-        wd.find_element(By.LINK_TEXT, 'home').click()
+        if not (wd.current_url.endswith('addressbook/') and len(
+                wd.find_elements(By.XPATH, 'a[contains(text(),"Last name")]')) > 0):
+            wd.find_element(By.LINK_TEXT, 'home').click()
 
     def init_contact(self, contact):
         wd = self.app.wd
@@ -53,4 +55,3 @@ class ContactHelper:
         wd = self.app.wd
         self.return_to_home_page()
         return len(wd.find_elements(By.NAME, 'selected[]'))
-
