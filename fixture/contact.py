@@ -34,6 +34,7 @@ class ContactHelper:
     def edit(self, contact):
         wd = self.app.wd
         # init_contact
+        self.return_to_home_page()
         wd.find_element(By.NAME, 'selected[]').click()
         wd.find_element(By.CSS_SELECTOR, 'a [title="Edit"]').click()
         self.clear_form(contact, wd)
