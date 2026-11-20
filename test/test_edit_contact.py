@@ -4,5 +4,6 @@ import pytest
 
 
 def test_edit_contact(app):
-    app.contact.edit(Contact('Сергей', 'Сергеевич', 'Сергеев','Иваново'))
-
+    if app.contact.count() == 0:
+        app.contact.init_contact(Contact('test', 'test', 'test', 'test'))
+    app.contact.edit(Contact('Сергей', 'Сергеевич', 'Сергеев', 'Иваново'))

@@ -49,3 +49,8 @@ class ContactHelper:
         wd.find_element(By.NAME, 'delete').click()
         self.return_to_home_page()
 
+    def count(self):
+        wd = self.app.wd
+        self.return_to_home_page()
+        return len(wd.find_elements(By.NAME, 'selected[]'))
+
