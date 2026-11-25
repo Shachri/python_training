@@ -63,7 +63,11 @@ class ContactHelper:
         contacts = []
         for elements in wd.find_elements(By.CSS_SELECTOR,'tr[name=entry]'):
             id = elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td.center').get_attribute('id')
-            contacts.append(Contact(id=id))
+            lastname =elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td:nth-child(2)')
+            firstname = elements.find_element(By.CSS_SELECTOR, 'tr[name=entry] td:nth-child(3)')
+            address =elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td:nth-child(4)')
+
+            contacts.append(Contact(id=id,firstname=firstname,lastname=lastname,address=address))
         return contacts
 
 
