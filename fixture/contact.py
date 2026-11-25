@@ -35,22 +35,32 @@ class ContactHelper:
         wd.find_element(By.NAME, 'lastname').clear()
         wd.find_element(By.NAME, 'address').clear()
 
-    def edit(self, contact):
+    def edit(self, contact, index):
+        wd = self.app.wd
+        self.edit_by_index(contact,0)
+
+    def edit_by_index(self, contact, index):
         wd = self.app.wd
         # init_contact
         self.return_to_home_page()
-        wd.find_element(By.NAME, 'selected[]').click()
+        wd.find_elements(By.NAME, 'selected[]')[index].click()
         wd.find_element(By.CSS_SELECTOR, 'a [title="Edit"]').click()
         self.clear_form(contact, wd)
         self.fill_contact_form(contact, wd)
         wd.find_element(By.NAME, 'update').click()
         self.return_to_home_page()
         self.contact_cache = None
-
     def delete(self):
         wd = self.app.wd
         self.return_to_home_page()
-        wd.find_element(By.NAME, 'selected[]').click()
+        self.delete_by_index(0)
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def delete_by_index(self, index):
+        wd = self.app.wd
+        self.return_to_home_page()
+        wd.find_elements(By.NAME, 'selected[]')[index].click()
         wd.find_element(By.NAME, 'delete').click()
         self.return_to_home_page()
         self.contact_cache = None

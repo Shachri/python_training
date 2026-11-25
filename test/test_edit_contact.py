@@ -1,12 +1,14 @@
 from model.contact import Contact
 from fixture.application import Application
 import pytest
-
+from random import randrange
 
 def test_edit_contact(app):
-    old_contacts= app.contact.get_contact_list()
+    contact = Contact('test', 'test', 'test', 'test')
     if app.contact.count() == 0:
-        app.contact.init_contact(Contact('test', 'test', 'test', 'test'))
-    app.contact.modify_first_group(Contact('Сергей', 'Сергеевич', 'Сергеев', 'Иваново'))
+        app.contact.init_contact(contact)
+    old_contacts= app.contact.get_contact_list()
+    index = randrange(len(old_contacts))
+    app.contact.edit_by_index(contact,index)
     new_contacts= app.contact.get_contact_list()
     assert len(old_contacts)==len(new_contacts)
