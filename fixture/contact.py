@@ -21,6 +21,7 @@ class ContactHelper:
         #fill_contact_form
         self.fill_contact_form(contact, wd)
         wd.find_element(By.CSS_SELECTOR, '[value=Enter]').click()
+        self.contact_cache = None
 
     def fill_contact_form(self, contact, wd):
         wd.find_element(By.NAME, 'firstname').send_keys('%s' % contact.firstname)
@@ -44,6 +45,7 @@ class ContactHelper:
         self.fill_contact_form(contact, wd)
         wd.find_element(By.NAME, 'update').click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def delete(self):
         wd = self.app.wd
@@ -51,23 +53,25 @@ class ContactHelper:
         wd.find_element(By.NAME, 'selected[]').click()
         wd.find_element(By.NAME, 'delete').click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
         self.return_to_home_page()
         return len(wd.find_elements(By.NAME, 'selected[]'))
 
+    contact_cache = None
     def get_contact_list(self):
-        wd = self.app.wd
-        self.return_to_home_page()
-        contacts = []
-        for elements in wd.find_elements(By.CSS_SELECTOR,'tr[name=entry]'):
-            id = elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td.center').get_attribute('id')
-            lastname =elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td:nth-child(2)')
-            firstname = elements.find_element(By.CSS_SELECTOR, 'tr[name=entry] td:nth-child(3)')
-            address =elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td:nth-child(4)')
-
-            contacts.append(Contact(id=id,firstname=firstname,lastname=lastname,address=address))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.return_to_home_page()
+            self.contact_cache = []
+            for elements in wd.find_elements(By.CSS_SELECTOR,'tr[name=entry]'):
+                id = elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td.center').get_attribute('id')
+                lastname =elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td:nth-child(2)')
+                firstname = elements.find_element(By.CSS_SELECTOR, 'tr[name=entry] td:nth-child(3)')
+                address =elements.find_element(By.CSS_SELECTOR,'tr[name=entry] td:nth-child(4)')
+                self.contact_cache.append(Contact(id=id,firstname=firstname,lastname=lastname,address=address))
+        return list(self.contact_cache)
 
 
