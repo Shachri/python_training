@@ -5,7 +5,8 @@ import pytest
 
 def test_add_contact(app):
     old_contacts = app.contact.get_contact_list()
-    contact = Contact('Иван', 'Иванов', 'Иванович', address='Иваново')
+    contact = Contact('Иван', 'Иванов', 'Иванович', address='Иваново', id=None, homephone=None, mobilephone=None,
+                      workphone=None, secondaryphone=None)
     app.contact.init_contact(contact)
     assert len(old_contacts) + 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
