@@ -24,11 +24,17 @@ class ContactHelper:
         wd.find_element(By.CSS_SELECTOR, '[value=Enter]').click()
         self.contact_cache = None
 
-    def fill_contact_form(self, contact, wd):
+    def fill_contact_form(self, contact,wd):
         wd.find_element(By.NAME, 'firstname').send_keys('%s' % contact.firstname)
         wd.find_element(By.NAME, 'middlename').send_keys('%s' % contact.middlename)
         wd.find_element(By.NAME, 'lastname').send_keys('%s' % contact.lastname)
-        wd.find_element(By.NAME, 'address').send_keys('Москва')
+        wd.find_element(By.NAME, 'address').send_keys('%s' % contact.address)
+        wd.find_element(By.NAME, 'home').send_keys('%s' % contact.homephone)
+        wd.find_element(By.NAME, 'mobile').send_keys('%s' % contact.mobilephone)
+        wd.find_element(By.NAME, 'work').send_keys('%s' % contact.workphone)
+        wd.find_element(By.NAME, 'email').send_keys('%s' % contact.email)
+        wd.find_element(By.NAME, 'email2').send_keys('%s' % contact.email2)
+        wd.find_element(By.NAME, 'email3').send_keys('%s' % contact.email3)
 
     def clear_form(self, contact, wd):
         wd.find_element(By.NAME, 'firstname').clear()
