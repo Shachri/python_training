@@ -85,15 +85,15 @@ class ContactHelper:
             self.contact_cache = []
             for elements in wd.find_elements(By.NAME, 'entry'):
                 cells = elements.find_elements(By.TAG_NAME, 'td')
-                firstname = cells[1].text
-                lastname = cells[2].text
+                firstname = cells[2].text
+                lastname = cells[1].text
                 id = cells[0].find_element(By.TAG_NAME, 'input').get_attribute('value')
                 address = cells[3].text
-                all_phones = cells[5].text.splitlines()
+                all_emails = cells[4].text
+                all_phones = cells[5].text
                 self.contact_cache.append(
                     Contact(firstname=firstname, middlename=None, lastname=lastname, address=address, id=id,
-                            homephone=all_phones[0], mobilephone=all_phones[1], workphone=all_phones[2],
-                            secondaryphone=None))
+                            all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
@@ -107,8 +107,13 @@ class ContactHelper:
         homephone = wd.find_element(By.NAME, 'home').get_attribute('value')
         mobilephone = wd.find_element(By.NAME, 'mobile').get_attribute('value')
         workphone = wd.find_element(By.NAME, 'work').get_attribute('value')
+        email = wd.find_element(By.NAME, 'email').get_attribute('value')
+        email2 = wd.find_element(By.NAME, 'email2').get_attribute('value')
+        email3 = wd.find_element(By.NAME, 'email3').get_attribute('value')
+        address = wd.find_element(By.NAME, 'address').get_attribute('value')
         return Contact(firstname=firsname, lastname=lastname, middlename=middlename, id=id, homephone=homephone,
-                       mobilephone=mobilephone, workphone=workphone)
+                       mobilephone=mobilephone, workphone=workphone,email=email, email2=email2,email3=email3,
+                       address=address)
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
