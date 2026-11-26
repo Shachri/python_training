@@ -44,7 +44,7 @@ class ContactHelper:
         # init_contact
         self.return_to_home_page()
         wd.find_elements(By.NAME, 'selected[]')[index].click()
-        wd.find_element(By.CSS_SELECTOR, 'a [title="Edit"]').click()
+        wd.find_elements(By.CSS_SELECTOR, 'a [title="Edit"]')[index].click()
         self.clear_form(contact, wd)
         self.fill_contact_form(contact, wd)
         wd.find_element(By.NAME, 'update').click()
