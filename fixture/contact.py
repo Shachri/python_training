@@ -50,7 +50,7 @@ class ContactHelper:
         wd = self.app.wd
         # init_contact
         self.return_to_home_page()
-        self.select_contact(index)
+        self.select_contact_for_edit(index)
         self.clear_form(contact, wd)
         self.fill_contact_form(contact, wd)
         wd.find_element(By.NAME, 'update').click()
